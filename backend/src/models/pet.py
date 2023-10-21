@@ -1,5 +1,5 @@
 import typing
-from enum import auto, StrEnum
+from enum import auto, Enum
 from uuid import UUID
 
 from sqlalchemy import ForeignKey
@@ -11,7 +11,7 @@ if typing.TYPE_CHECKING:
     from src.models import User, PetReview, CareRequest
 
 
-class Species(StrEnum):
+class Species(Enum):
     dog = auto()
     cat = auto()
     bird = auto()
@@ -19,7 +19,7 @@ class Species(StrEnum):
 
 class Pet(SQLBase, DatedTableMixin):
     name: Mapped[str]
-    specie: Mapped[StrEnum]
+    specie: Mapped[Enum]
     breed: Mapped[str | None]
     description: Mapped[str]
     cautions: Mapped[str]

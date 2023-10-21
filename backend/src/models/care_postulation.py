@@ -1,5 +1,5 @@
 import typing
-from enum import auto, StrEnum
+from enum import auto, Enum
 from datetime import datetime
 from uuid import UUID
 

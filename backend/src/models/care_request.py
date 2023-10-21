@@ -1,5 +1,5 @@
 import typing
-from enum import auto, StrEnum
+from enum import auto, Enum
 from datetime import datetime
 from uuid import UUID
 
@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from src.models import Pet, CarePostulation
 
 
-class CareRequestStatus(StrEnum):
+class CareRequestStatus(Enum):
     pending = auto()
     accepted = auto()
     rejected = auto()

@@ -13,9 +13,13 @@ if typing.TYPE_CHECKING:
 
 class User(SQLBase, DatedTableMixin):
     email: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str]
     first_name: Mapped[str]
     last_name: Mapped[str]
-    password: Mapped[str]
+    phone_number: Mapped[str]
+    country: Mapped[str]
+    city: Mapped[str]
+    neighborhood: Mapped[str]
     is_active: Mapped[bool] = mapped_column(default=True)
     is_superuser: Mapped[bool] = mapped_column(default=False)
     pets: Mapped[List["Pet"]] = relationship("Pet", back_populates="owner")
