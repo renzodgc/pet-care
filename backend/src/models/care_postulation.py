@@ -10,19 +10,15 @@ from src.core.database import DatedTableMixin, SQLBase
  
 if typing.TYPE_CHECKING:
     from src.models import User, CareRequest
-
-class Species(StrEnum):
-    dog = auto()
-    cat = auto()
+from src.models.pet import Species
 
 
 class CarePostulation(SQLBase, DatedTableMixin):
-    name: Mapped[str]
     start_date: Mapped[datetime]
     end_date: Mapped[datetime]
     price_per_day: Mapped[int]
     restrictions: Mapped[str]
-    allowed_species: Mapped[str]# TODO: [typing.List[Species]]
+    allowed_species: Mapped[Species]# TODO: [typing.List[Species]]
     place_traits: Mapped[str]
     is_active: Mapped[bool] = mapped_column(default=True)
     caretaker_id: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
