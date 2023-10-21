@@ -20,6 +20,8 @@ class CareRequestStatus(StrEnum):
 
 class CareRequest(SQLBase, DatedTableMixin):
     status: Mapped[CareRequestStatus] = mapped_column(CareRequestStatus, default=CareRequestStatus.pending)
+    start_date: Mapped[datetime]
+    end_date: Mapped[datetime]
     request_message: Mapped[str]
     response_message: Mapped[str | None]
     pet_id: Mapped[UUID] = mapped_column(ForeignKey("pet.id"))
