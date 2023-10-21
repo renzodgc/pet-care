@@ -38,8 +38,8 @@ class User(SQLBase, DatedTableMixin):
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
-    def __str__(self) -> str:
-        return self.email
+    # def __str__(self) -> str:
+    #     return self.email
 
     @classmethod
     def actives(cls, session: Session) -> Objects["User"]:

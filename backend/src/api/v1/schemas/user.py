@@ -9,6 +9,12 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+    first_name: str
+    last_name: str
+    phone_number: str
+    country: str
+    city: str
+    neighborhood: str
 
 
 class User(UserBase):

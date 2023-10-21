@@ -7,11 +7,15 @@ from sqladmin import Admin
 
 from src.admin import AdminAuth, UserAdmin
 from src.core.config import settings
+from src.core.upload_mocked_data import upload_mocked_data, drop_mocked_data
 from src.core.database import engine
 from src.logging import LogConfig
 from src.urls import router
 
 dictConfig(LogConfig().dict())
+
+drop_mocked_data()
+upload_mocked_data()
 
 app = FastAPI()
 
