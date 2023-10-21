@@ -23,13 +23,16 @@ class User(SQLBase, DatedTableMixin):
     is_active: Mapped[bool] = mapped_column(default=True)
     is_superuser: Mapped[bool] = mapped_column(default=False)
     pets: Mapped[List["Pet"]] = relationship("Pet", back_populates="owner")
-    received_pet_reviews: Mapped[List["PetReview"]] = relationship()
-    submitted_caretaker_reviews: Mapped[List["CaretakerReview"]] = relationship()
+    submitted_caretaker_reviews: Mapped[List["CaretakerReview"]] = relationship(
+        "CaretakerReview", back_populates="reviewer", foreign_keys="CaretakerReview.reviewer_id"
+    )
 
     # Caretaker
     care_postulations: Mapped[List["CarePostulation"]] = relationship("CarePostulation", back_populates="caretaker")
-    submitted_pet_reviews: Mapped[List["PetReview"]] = relationship()
-    received_caretaker_reviews: Mapped[List["CaretakerReview"]] = relationship()
+    submitted_pet_reviews: Mapped[List["PetReview"]] = relationship("PetReview", back_populates="reviewer")
+    received_caretaker_reviews: Mapped[List["CaretakerReview"]] = relationship(
+        "CaretakerReview", back_populates="caretaker", foreign_keys="CaretakerReview.caretaker_id"
+    )
 
     @property
     def full_name(self) -> str:

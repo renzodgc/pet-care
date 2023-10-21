@@ -1,5 +1,5 @@
 import typing
-from enum import auto, Enum
+from enum import auto, StrEnum
 from datetime import datetime
 from uuid import UUID
 
@@ -12,19 +12,19 @@ if typing.TYPE_CHECKING:
     from src.models import Pet, CarePostulation
 
 
-class CareRequestStatus(Enum):
+class CareRequestStatus(StrEnum):
     pending = auto()
     accepted = auto()
     rejected = auto()
 
 
 class CareRequest(SQLBase, DatedTableMixin):
-    status: Mapped[CareRequestStatus] = mapped_column(CareRequestStatus, default=CareRequestStatus.pending)
+    status: Mapped[CareRequestStatus] = mapped_column(default=CareRequestStatus.pending)
     start_date: Mapped[datetime]
     end_date: Mapped[datetime]
     request_message: Mapped[str]
-    response_message: Mapped[str | None]
+    response_message: Mapped[str | None] = mapped_column(default=None)
     pet_id: Mapped[UUID] = mapped_column(ForeignKey("pet.id"))
-    pet: Mapped["Pet"] = relationship("Pet", back_populates="requests")
+    pet: Mapped["Pet"] = relationship("Pet", back_populates="care_requests")
     postulation_id: Mapped[UUID] = mapped_column(ForeignKey("care_postulation.id"))
-    postulation: Mapped["CarePostulation"] = relationship("CarePostulation", back_populates="requests")
+    postulation: Mapped["CarePostulation"] = relationship("CarePostulation", back_populates="care_requests")

@@ -6,7 +6,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 
 from src.api.dependencies import db_session, get_user
 from src.api.v1.schemas import Item, ItemCreate
-from src.controllers import ItemController
+from src.controllers import PetController
 from src.core.database import Session
 from src.models import User
 
@@ -26,4 +26,4 @@ def create_item(
     user: User = Depends(get_user),
     session: Session = Depends(db_session),
 ) -> Any:
-    return ItemController.create(item_data=item_data, owner_id=user.id, session=session)
+    return PetController.create(item_data=item_data, owner_id=user.id, session=session)
