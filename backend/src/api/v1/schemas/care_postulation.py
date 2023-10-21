@@ -14,7 +14,7 @@ class CarePostulationCreate(BaseModel):
     place_traits: str
 
 
-class CarePostulation(CarePostulationCreate):
+class CarePostulationOut(CarePostulationCreate):
     caretaker_id: UUID
 
     class Config:
