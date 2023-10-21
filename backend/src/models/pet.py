@@ -28,6 +28,3 @@ class Pet(SQLBase, DatedTableMixin):
     owner: Mapped["User"] = relationship("User", back_populates="pets")
     reviews: Mapped["PetReview"] = relationship("PetReview", back_populates="pet")
     care_requests: Mapped["CareRequest"] = relationship("CareRequest", back_populates="pet")
-
-    def __str__(self) -> str:
-        return f"Item {str(self.id)[:12]}..."

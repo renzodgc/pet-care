@@ -14,8 +14,8 @@ from src.urls import router
 
 dictConfig(LogConfig().dict())
 
-# drop_mocked_data()
-# upload_mocked_data()
+drop_mocked_data()
+upload_mocked_data()
 
 app = FastAPI()
 

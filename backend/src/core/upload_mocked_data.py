@@ -2,8 +2,8 @@ from datetime import datetime
 from src.core.database import SessionLocal
 from src.models import User, Pet, CaretakerReview, PetReview, CarePostulation, CareRequest, Species
 from src.api.dependencies import db_session
-from src.api.v1.schemas import UserCreate
-from src.controllers import UserController
+from src.api.v1.schemas import UserCreate, PetCreate
+from src.controllers import UserController, PetController
 
 session = SessionLocal()
 
@@ -42,19 +42,25 @@ def upload_mocked_data():
         ),
         session=session
     )
-    # carla_pet = Pet.objects(session).create({
-    #     "name": "Teo",
-    #     "specie": Species.dog,
-    #     "breed": "Perro Salchicha",
-    #     "description": "Es un perro muy tranquilo y cariñoso",
-    #     "cautions": "No le gusta que lo toquen mucho",
-    #     "owner_id": carla.id,
-    # })
-    # marta_pet = Pet.objects(session).create({
-    #     "name": "Merlina",
-    #     "specie": Species.cat,
-    #     "breed": None,
-    #     "description": "Es una gata muy juguetona",
-    #     "cautions": "No le gusta que la toquen mucho",
-    #     "owner_id": marta.id,
-    # })
+    # carla_pet = PetController.create(
+    #     pet_data=PetCreate(
+    #         name="Teo",
+    #         specie=Species.dog,
+    #         breed="Perro Salchicha",
+    #         description="Es un perro muy tranquilo y cariñoso",
+    #         cautions="No le gusta que lo toquen mucho",
+    #     ),
+    #     owner_id=carla.id,
+    #     session=session
+    # )
+    # marta_pet = PetController.create(
+    #     pet_data=PetCreate(
+    #         name="Merlina",
+    #         specie=Species.cat,
+    #         breed=None,
+    #         description="Es una gata muy juguetona",
+    #         cautions="No le gusta que la toquen mucho",
+    #     ),
+    #     owner_id=marta.id,
+    #     session=session
+    # )
