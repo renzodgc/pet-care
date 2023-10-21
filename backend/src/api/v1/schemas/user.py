@@ -5,10 +5,16 @@ from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
     email: EmailStr
+    password: str
 
 
 class UserCreate(UserBase):
-    password: str
+    first_name: str
+    last_name: str
+    phone_number: str
+    country: str
+    city: str
+    neighborhood: str
 
 
 class User(UserBase):
