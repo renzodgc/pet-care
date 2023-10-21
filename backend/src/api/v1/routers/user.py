@@ -8,7 +8,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 from src import models
 from src.api.dependencies import db_session, get_user
 from src.api.v1 import schemas
-from src.api.v1.schemas import Item, Token, UserCreate
+from src.api.v1.schemas import Item, Token, UserCreate, UserBase
 from src.controllers import UserController
 from src.core.database import Session
 from src.core.security import AuthManager
@@ -29,7 +29,7 @@ def signup(
 @router.post("/login")
 def login(
     response: Response,
-    user_data: UserCreate,
+    user_data: UserBase,
     session: Session = Depends(db_session),
 ) -> Token | None:
     user = UserController.login(user_data=user_data, session=session)
