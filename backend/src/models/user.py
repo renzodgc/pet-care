@@ -45,8 +45,38 @@ class User(SQLBase, DatedTableMixin):
     def actives(cls, session: Session) -> Objects["User"]:
         return Objects(cls, session, User.is_active == True)  # noqa: E712
 
-    def get_pets(self) -> Select:
+    def get_my_pets(self) -> Select:
         from src.models import Pet
 
         statement = select(Pet).filter(Pet.owner_id == self.id).filter(Pet.is_active == True)  # noqa: E712
+        return statement
+
+    def get_all_pets(self) -> Select:
+        from src.models import Pet
+        
+        statement = select(Pet).filter(Pet.is_active == True)  # noqa: E712
+        return statement
+
+    def get_a_pet(self) -> Select:
+        from src.models import Pet
+
+        statement = select(Pet).filter(Pet.id == self.id).filter(Pet.is_active == True)  # noqa: E712
+        return statement
+
+    def get_my_care_postulations(self) -> Select:
+        from src.models import CarePostulation
+
+        statement = select(CarePostulation).filter(CarePostulation.caretaker_id == self.id).filter(CarePostulation.is_active == True)  # noqa: E712
+        return statement
+
+    def get_all_care_postulations(self) -> Select:
+        from src.models import CarePostulation
+        
+        statement = select(CarePostulation).filter(CarePostulation.is_active == True)  # noqa: E712
+        return statement
+
+    def get_a_care_postulation(self) -> Select:
+        from src.models import CarePostulation
+
+        statement = select(CarePostulation).filter(CarePostulation.id == self.id).filter(CarePostulation.is_active == True)  # noqa: E712
         return statement
