@@ -8,6 +8,8 @@ from src.core.database import Session
 class PetController:
     @staticmethod
     def create(
-        item_data: schemas.ItemCreate, owner_id: UUID, session: Session
+        pet_data: schemas.PetCreate, owner_id: UUID, session: Session
     ) -> models.Pet:
-        pass
+        pet_data = schemas.PetCreate(owner_id=owner_id, **pet_data.dict())
+        pet = models.Pet.objects(session).create(pet_data.dict())
+        return pet
