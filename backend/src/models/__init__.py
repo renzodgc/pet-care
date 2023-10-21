@@ -1,4 +1,4 @@
-from .pet import Pet
+from .pet import Pet, Species
 from .user import User
 from .review import PetReview, CaretakerReview
 from .care_postulation import CarePostulation
