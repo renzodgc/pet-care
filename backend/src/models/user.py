@@ -8,15 +8,35 @@ from sqlalchemy.sql import Select
 from src.core.database import DatedTableMixin, Objects, Session, SQLBase
 
 if typing.TYPE_CHECKING:
-    from src.models import Item
+    from src.models import Pet, CarePostulation, PetReview, CaretakerReview
 
 
 class User(SQLBase, DatedTableMixin):
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+    phone_number: Mapped[str]
+    country: Mapped[str]
+    city: Mapped[str]
+    neighborhood: Mapped[str]
     is_active: Mapped[bool] = mapped_column(default=True)
     is_superuser: Mapped[bool] = mapped_column(default=False)
-    items: Mapped[List["Item"]] = relationship("Item", back_populates="owner")
+    pets: Mapped[List["Pet"]] = relationship("Pet", back_populates="owner")
+    submitted_caretaker_reviews: Mapped[List["CaretakerReview"]] = relationship(
+        "CaretakerReview", back_populates="reviewer", foreign_keys="CaretakerReview.reviewer_id"
+    )
+
+    # Caretaker
+    care_postulations: Mapped[List["CarePostulation"]] = relationship("CarePostulation", back_populates="caretaker")
+    submitted_pet_reviews: Mapped[List["PetReview"]] = relationship("PetReview", back_populates="reviewer")
+    received_caretaker_reviews: Mapped[List["CaretakerReview"]] = relationship(
+        "CaretakerReview", back_populates="caretaker", foreign_keys="CaretakerReview.caretaker_id"
+    )
+
+    @property
+    def full_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
 
     def __str__(self) -> str:
         return self.email
@@ -25,14 +45,8 @@ class User(SQLBase, DatedTableMixin):
     def actives(cls, session: Session) -> Objects["User"]:
         return Objects(cls, session, User.is_active == True)  # noqa: E712
 
-    def get_items(self) -> Select:
-        from src.models import Item
+    def get_pets(self) -> Select:
+        from src.models import Pet
 
-        statement = select(Item).filter(Item.owner_id == self.id)
-        return statement
-
-    def get_public_items(self) -> Select:
-        from src.models import Item
-
-        statement = self.get_items().filter(Item.is_public == True)  # noqa: E712
+        statement = select(Pet).filter(Pet.owner_id == self.id).filter(Pet.is_active == True)  # noqa: E712
         return statement

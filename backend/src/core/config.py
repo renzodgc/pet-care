@@ -1,9 +1,9 @@
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseSettings, PostgresDsn
 
 
-class LogLevel(str, Enum):
+class LogLevel(StrEnum):
     critical = "CRITICAL"
     error = "ERROR"
     warning = "WARNING"
