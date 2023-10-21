@@ -5,9 +5,17 @@ from src.api.v1 import schemas
 from src.core.database import Session
 
 
-class ItemController:
+class ReviewController:
     @staticmethod
-    def create(
+    def create_pet_review(
+        item_data: schemas.ItemCreate, owner_id: UUID, session: Session
+    ) -> models.Item:
+        item_data = schemas.Item(owner_id=owner_id, **item_data.dict())
+        item = models.Item.objects(session).create(item_data.dict())
+        return item
+
+    @staticmethod
+    def create_caretaker_review(
         item_data: schemas.ItemCreate, owner_id: UUID, session: Session
     ) -> models.Item:
         item_data = schemas.Item(owner_id=owner_id, **item_data.dict())
