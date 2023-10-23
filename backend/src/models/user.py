@@ -38,14 +38,11 @@ class User(SQLBase, DatedTableMixin):
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
-    # def __str__(self) -> str:
-    #     return self.email
-
     @classmethod
     def actives(cls, session: Session) -> Objects["User"]:
         return Objects(cls, session, User.is_active == True)  # noqa: E712
 
-    def get_my_pets(self) -> Select:
+    def get_pets(self) -> Select:
         from src.models import Pet
 
         statement = select(Pet).filter(Pet.owner_id == self.id).filter(Pet.is_active == True)  # noqa: E712

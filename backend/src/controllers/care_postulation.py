@@ -8,6 +8,8 @@ from src.core.database import Session
 class CarePostulationController:
     @staticmethod
     def create(
-        item_data: schemas.UserCreate, owner_id: UUID, session: Session
-    ) -> models.CarePostulation:
-        pass
+        care_postulation_data: schemas.CarePostulationCreate, caretaker_id: UUID, session: Session
+    ) -> models.CareRequest:
+        care_postulation_data = schemas.CarePostulationRelated(caretaker_id=caretaker_id, **care_postulation_data.dict())
+        care_postulation = models.CarePostulation.objects(session).create(care_postulation_data.dict())
+        return care_postulation

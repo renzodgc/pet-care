@@ -17,7 +17,7 @@ router = APIRouter()
 def get_my_pets(
     user: User = Depends(get_user), session: Session = Depends(db_session)
 ) -> Any:
-    return paginate(session, user.get_my_pets())
+    return paginate(session, user.get_pets())
 
 
 @router.get("", response_model=Page[PetOut])

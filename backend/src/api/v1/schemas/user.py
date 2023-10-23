@@ -17,10 +17,16 @@ class UserCreate(UserBase):
     neighborhood: str
 
 
-class User(UserBase):
+class UserOut(UserBase):
+    email: EmailStr
     id: UUID
     is_active: bool
-    is_superuser: bool
+    first_name: str
+    last_name: str
+    phone_number: str
+    country: str
+    city: str
+    neighborhood: str
 
     class Config:
         orm_mode = True

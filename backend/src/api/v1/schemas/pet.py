@@ -10,12 +10,15 @@ class PetCreate(BaseModel):
     description: str
     cautions: str
 
-class PetOut(BaseModel):
-    pet_id: UUID
-    name: str
-    description: str
-    cautions: str
-    breed: str | None
+class PetOwner(PetCreate):
+    owner_id: UUID
+
+    class Config:
+        orm_mode = True
+
+
+class PetOut(PetOwner):
+    id: UUID
 
     class Config:
         orm_mode = True

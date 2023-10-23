@@ -10,6 +10,6 @@ class PetController:
     def create(
         pet_data: schemas.PetCreate, owner_id: UUID, session: Session
     ) -> models.Pet:
-        pet_data = schemas.PetCreate(owner_id=owner_id, **pet_data.dict())
+        pet_data = schemas.PetOwner(owner_id=owner_id, **pet_data.dict())
         pet = models.Pet.objects(session).create(pet_data.dict())
         return pet

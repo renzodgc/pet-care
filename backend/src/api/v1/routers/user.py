@@ -36,12 +36,16 @@ def login(
     return AuthManager.process_login(user=user, response=response)
 
 
-@router.get("/me", response_model=schemas.User)
+@router.get("/me", response_model=schemas.UserOut)
 def me(user: models.User = Depends(get_user)) -> Any:
     return user
 
+@router.get("/{user_id}", response_model=schemas.UserOut)
+def get_users(user_id: UUID, session: Session = Depends(db_session)) -> Any:
+    user = models.User.objects(session).get_or_404(models.User.id == user_id)
+    return user
 
 @router.get("/{user_id}/pets", response_model=Page[schemas.PetOut])
 def get_pets(user_id: UUID, session: Session = Depends(db_session)) -> Any:
     user = models.User.objects(session).get_or_404(models.User.id == user_id)
-    return paginate(session, user.get_public_items())
+    return paginate(session, user.get_pets())
